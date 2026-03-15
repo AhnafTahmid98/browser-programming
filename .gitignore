@@ -1,0 +1,29 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor folders/files
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Node modules (only matters if added later)
+node_modules/
+
+# Build/output folders
+dist/
+build/
+
+# Environment files
+.env
+
+# Python cache if used accidentally
+__pycache__/
+*.pyc
