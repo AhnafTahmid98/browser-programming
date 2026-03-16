@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L05 — DOM • State • Browser APIs </title>
+  <link rel="stylesheet" href="exercise.css" />
+</head>
+
+<body>
+  <header class="container">
+    <h1>DOM • State • Browser APIs</h1>
+    <p class="subtitle">6 Exercises: DOM (easy+medium) • State (easy+medium) • APIs (easy+medium) — No fetch/async</p>
+  </header>
+
+  <main class="container">
+
+    <!-- 1) DOM EASY -->
+    <section class="card">
+      <h2>1) DOM EASY — Live Character Counter</h2>
+      <p class="hint">On every input, update length + remaining (max 50). Warn when remaining &lt; 10.</p>
+      <div class="row">
+        <input id="msgInput" type="text" placeholder="Type message (max 50 chars)" />
+      </div>
+      <p id="msgStats">Length: ... | Remaining: ...</p>
+    </section>
+
+    <!-- 2) DOM MEDIUM -->
+    <section class="card">
+      <h2>2) DOM MEDIUM — Click-to-Toggle List (Event Delegation)</h2>
+      <p class="hint">Add items. Click item to toggle DONE. Click X to remove. ONE click handler on UL.</p>
+      <div class="row">
+        <input id="itemInput" type="text" placeholder="Item text (e.g., Milk)" />
+        <button id="btnAddItem">Add</button>
+        <button id="btnClearItems">Clear All</button>
+      </div>
+      <ul id="itemList"></ul>
+      <p id="listStats">Items: ... | Done: ...</p>
+    </section>
+
+    <!-- 3) STATE EASY -->
+    <section class="card">
+      <h2>3) STATE EASY — Counter (State → Render)</h2>
+      <p class="hint">Update state only. UI must be updated inside renderCounter().</p>
+      <div class="row">
+        <button id="btnMinus">-1</button>
+        <button id="btnPlus">+1</button>
+        <button id="btnZero">Reset</button>
+      </div>
+      <p id="countOut">Count: ...</p>
+      <p id="parityOut">Parity: ...</p>
+    </section>
+
+    <!-- 4) STATE MEDIUM -->
+    <section class="card">
+      <h2>4) STATE MEDIUM — Mini Cart (Reducer-like)</h2>
+      <p class="hint">Buttons dispatch actions: ADD / REMOVE / CLEAR. Render from state. Derived: items + total.</p>
+      <div class="row">
+        <button id="btnAddApple">Add Apple (€2)</button>
+        <button id="btnAddBanana">Add Banana (€1)</button>
+        <button id="btnRemoveLast">Remove Last</button>
+        <button id="btnCartClear">Clear Cart</button>
+      </div>
+      <p id="cartOut">Cart: ...</p>
+      <p id="cartTotals">Items: ... | Total: ...</p>
+    </section>
+
+    <!-- 5) API EASY (localStorage) -->
+    <section class="card">
+      <h2>5) Browser API EASY — Notes (localStorage)</h2>
+      <p class="hint">Save a note to localStorage, load it, clear it (sync).</p>
+      <div class="row">
+        <input id="noteInput" type="text" placeholder="Write a note..." />
+        <button id="btnSaveNote">Save</button>
+        <button id="btnLoadNote">Load</button>
+        <button id="btnClearNote">Clear</button>
+      </div>
+      <p id="noteOut">Saved note: ...</p>
+    </section>
+
+    <!-- 6) API MEDIUM (Geolocation, callback) -->
+    <section class="card">
+      <h2>6) Browser API MEDIUM — Geolocation (No async/await)</h2>
+      <p class="hint">
+        Use navigator.geolocation.getCurrentPosition(success, error, options).
+        Show latitude, longitude, accuracy. Handle permission denied.
+      </p>
+      <div class="row">
+        <button id="btnGetLocation">Get Location</button>
+        <button id="btnClearLocation">Clear</button>
+      </div>
+      <p id="geoStatus">Status: ...</p>
+      <pre id="geoOut">...</pre>
+    </section>
+
+  </main>
+
+  <footer class="container">
+    <p>Browser Programming — Lecture 5</p>
+  </footer>
+
+  <script src="exercise.js"></script>
+</body>
+</html>
