@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>L04 — JS Exercises </title>
+  <link rel="stylesheet" href="exercise.css" />
+</head>
+
+<body>
+  <header class="container">
+    <h1>JavaScript Basics — Extra Exercises</h1>
+    <p class="subtitle">Conditionals • Loops • Functions </p>
+  </header>
+
+  <main class="container">
+
+    <!-- Exercise 9 -->
+    <section class="card">
+      <h2>Exercise 9 — Grade (Conditionals)</h2>
+      <p class="hint">Enter a score (0–100). Use if / else if / else to show A/B/C/D/F.</p>
+      <div class="row">
+        <input id="scoreInput" type="number" placeholder="0–100" />
+        <button id="btnGrade">Get Grade</button>
+      </div>
+      <p id="gradeOut">Grade: ...</p>
+    </section>
+
+    <!-- Exercise 10 -->
+    <section class="card">
+      <h2>Exercise 10 — Even / Odd (Function)</h2>
+      <p class="hint">Write a small function isEven( n ) and use it to show EVEN/ODD.</p>
+      <div class="row">
+        <input id="numEvenOdd" type="number" placeholder="Enter a number" />
+        <button id="btnEvenOdd">Check</button>
+      </div>
+      <p id="evenOddOut">Result: ...</p>
+    </section>
+
+    <!-- Exercise 11 -->
+    <section class="card">
+      <h2>Exercise 11 — Countdown (Loop)</h2>
+      <p class="hint">Enter a start number. Use a for loop to count down to 0.</p>
+      <div class="row">
+        <input id="countdownInput" type="number" placeholder="Start (e.g., 10)" />
+        <button id="btnCountdown">Go</button>
+      </div>
+      <p id="countdownOut">...</p>
+    </section>
+
+    <!-- Exercise 12 -->
+    <section class="card">
+      <h2>Exercise 12 — Sum 1..N (Loop + Function)</h2>
+      <p class="hint">Enter N. Use a function + loop to compute 1 + 2 + ... + N.</p>
+      <div class="row">
+        <input id="nSumInput" type="number" placeholder="N (e.g., 100)" />
+        <button id="btnSumN">Compute</button>
+      </div>
+      <p id="sumNOut">Sum: ...</p>
+    </section>
+
+    <!-- Exercise 13 -->
+    <section class="card">
+      <h2>Exercise 13 — Repeat Text N Times (Loop)</h2>
+      <p class="hint">Enter text + times. Use a for loop to build one output string.</p>
+      <div class="row">
+        <input id="repeatText" type="text" placeholder="Text" />
+        <input id="repeatCount" type="number" placeholder="Times" />
+        <button id="btnRepeat">Repeat</button>
+      </div>
+      <p id="repeatOut">...</p>
+    </section>
+
+    <!-- Exercise 14 -->
+    <section class="card">
+      <h2>Exercise 14 — Simple Login (Conditionals)</h2>
+      <p class="hint">Check username + password. If correct → Welcome ✅ else → Error ❌</p>
+      <div class="row">
+        <input id="loginUser" type="text" placeholder="Username" />
+        <input id="loginPass" type="password" placeholder="Password" />
+        <button id="btnLogin">Login</button>
+      </div>
+      <p id="loginOut">Status: ...</p>
+    </section>
+
+    <!-- Exercise 15 -->
+    <section class="card">
+      <h2>Exercise 15 — Min / Max of 3 Numbers (Functions)</h2>
+      <p class="hint">Write two functions: min3 and max3 using simple if comparisons.</p>
+      <div class="row">
+        <input id="x" type="number" placeholder="X" />
+        <input id="y" type="number" placeholder="Y" />
+        <input id="z" type="number" placeholder="Z" />
+        <button id="btnMinMax">Find</button>
+      </div>
+      <p id="minMaxOut">...</p>
+    </section>
+
+    <!-- Exercise 16 -->
+    <section class="card">
+      <h2>Exercise 16 — Multiplication Table (Loops + Function)</h2>
+      <p class="hint">Enter a number. Generate a 1..10 multiplication table.</p>
+      <div class="row">
+        <input id="tableN" type="number" placeholder="Number (e.g., 7)" />
+        <button id="btnTable">Generate</button>
+      </div>
+      <p id="tableOut">...</p>
+    </section>
+
+  </main>
+
+  <footer class="container">
+    <p>Browser Programming — Lecture 4 </p>
+  </footer>
+
+  <script src="exercise.js"></script>
+</body>
+</html>
