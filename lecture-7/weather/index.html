@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Dashboard</title>
+  <link rel="stylesheet" href="exercise.css">
+</head>
+<body>
+
+  <div class="stripe"></div>
+
+  <header class="header">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Live Data
+    </div>
+    <h1>Weather<br><em>Dashboard</em></h1>
+    <p class="subtitle">Real-time conditions powered by Open-Meteo API.</p>
+  </header>
+
+  <div class="city-buttons">
+    <button id="btnKuopio"   onclick="loadWeatherByCity('Kuopio',   62.8924, 27.6770, this)">Kuopio</button>
+    <button id="btnHelsinki" onclick="loadWeatherByCity('Helsinki', 60.1699, 24.9384, this)">Helsinki</button>
+    <button id="btnOulu"     onclick="loadWeatherByCity('Oulu',     65.0121, 25.4651, this)">Oulu</button>
+  </div>
+
+  <div id="weatherBox">
+    <div class="weather-hero">
+      <div class="city-group">
+        <small>Location</small>
+        <div id="city">—</div>
+      </div>
+      <div class="temp-group">
+        <span id="temperature">—</span><sup id="unit"></sup>
+      </div>
+    </div>
+
+    <div class="weather-stats">
+      <div class="weather-row">
+        <span class="weather-label">
+          <span class="stat-icon wind">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/>
+            </svg>
+          </span>
+          Wind Speed
+        </span>
+        <span class="weather-value" id="wind">—</span>
+      </div>
+
+      <div class="weather-row">
+        <span class="weather-label">
+          <span class="stat-icon clock">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </span>
+          Reading Time
+        </span>
+        <span class="weather-value" id="time">—</span>
+      </div>
+    </div>
+  </div>
+
+  <p id="status"></p>
+  <pre id="output"></pre>
+
+  <script src="script.js"></script>
+</body>
+</html>
