@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Backend API Test — Lab 9</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #080c10;
+      --surface: #0e1318;
+      --border:  #1c2730;
+      --accent:  #3bffb0;
+      --accent2: #3b8eff;
+      --warn:    #ff6b6b;
+      --text:    #d4e0ec;
+      --muted:   #4a6070;
+      --mono:    "DM Mono", monospace;
+      --sans:    "DM Sans", sans-serif;
+      --display: "Syne", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      padding: 3rem 1.5rem 5rem;
+      background-image:
+        linear-gradient(rgba(59,255,176,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,255,176,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade { animation: fadeUp .5s ease both; }
+
+    /* ── Header ── */
+    header {
+      max-width: 720px;
+      margin: 0 auto 3rem;
+      animation: fadeUp .45s ease both;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--accent);
+      background: rgba(59,255,176,.08);
+      border: 1px solid rgba(59,255,176,.18);
+      border-radius: 99px;
+      padding: .3rem .85rem;
+      margin-bottom: 1.1rem;
+      letter-spacing: .06em;
+    }
+    .badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 6px var(--accent);
+    }
+    header h1 {
+      font-family: var(--display);
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      color: #fff;
+    }
+    header h1 span { color: var(--accent); }
+    header p {
+      margin-top: .7rem;
+      font-size: .92rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Grid ── */
+    .grid {
+      max-width: 720px;
+      margin: 0 auto;
+      display: grid;
+      gap: 1.2rem;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.6rem 1.8rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .25s, box-shadow .25s;
+    }
+    .card:hover {
+      border-color: rgba(59,255,176,.22);
+      box-shadow: 0 0 32px rgba(59,255,176,.05);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity .25s;
+    }
+    .card:hover::before { opacity: 1; }
+
+    .card.blue:hover { border-color: rgba(59,142,255,.22); box-shadow: 0 0 32px rgba(59,142,255,.05); }
+    .card.blue::before { background: linear-gradient(90deg, var(--accent2), transparent); }
+    .card.blue .endpoint { color: var(--accent2); background: rgba(59,142,255,.08); border-color: rgba(59,142,255,.18); }
+    .card.blue button { background: var(--accent2); }
+    .card.blue button:hover { box-shadow: 0 4px 20px rgba(59,142,255,.4); }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.1rem;
+      flex-wrap: wrap;
+      gap: .6rem;
+    }
+    .card-title {
+      font-family: var(--display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .endpoint {
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--accent);
+      background: rgba(59,255,176,.08);
+      border: 1px solid rgba(59,255,176,.16);
+      border-radius: 6px;
+      padding: .22rem .65rem;
+      letter-spacing: .04em;
+    }
+
+    /* ── Button ── */
+    button {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--accent);
+      color: #060a0d;
+      border: none;
+      padding: .62rem 1.4rem;
+      font-family: var(--sans);
+      font-size: .85rem;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: box-shadow .2s, opacity .2s, transform .1s;
+      letter-spacing: .01em;
+    }
+    button:hover { box-shadow: 0 4px 20px rgba(59,255,176,.35); opacity: .95; }
+    button:active { transform: scale(.97); }
+
+    /* ── Output ── */
+    .output-wrap { margin-top: 1.1rem; min-height: 2.5rem; }
+    .output {
+      display: none;
+      background: rgba(0,0,0,.3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      font-family: var(--mono);
+      font-size: .82rem;
+      line-height: 2;
+      animation: fadeUp .3s ease both;
+    }
+    .output.visible { display: block; }
+    .output .row { display: flex; gap: .6rem; }
+    .output .key { color: var(--muted); min-width: 80px; }
+    .output .val { color: var(--text); }
+    .output .val.hi  { color: var(--accent); font-weight: 500; }
+    .output .val.hi2 { color: var(--accent2); font-weight: 500; }
+
+    /* loading */
+    .loader {
+      display: none;
+      align-items: center;
+      gap: .6rem;
+      margin-top: 1rem;
+      font-family: var(--mono);
+      font-size: .8rem;
+      color: var(--muted);
+    }
+    .loader.visible { display: flex; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      width: 14px; height: 14px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+
+    /* error */
+    .error-msg {
+      display: none;
+      margin-top: 1rem;
+      font-family: var(--mono);
+      font-size: .8rem;
+      color: var(--warn);
+      background: rgba(255,107,107,.07);
+      border: 1px solid rgba(255,107,107,.2);
+      border-radius: 8px;
+      padding: .7rem 1rem;
+    }
+    .error-msg.visible { display: block; }
+
+    /* ── Answer card ── */
+    .answer-card {
+      border-left: 3px solid var(--accent2);
+    }
+    .answer-card::before { display: none; }
+    .answer-card:hover { border-color: rgba(59,142,255,.35); border-left-color: var(--accent2); box-shadow: 0 0 32px rgba(59,142,255,.04); }
+    .answer-text {
+      font-size: .88rem;
+      line-height: 1.85;
+      color: #7a9bb5;
+      margin-top: .5rem;
+    }
+    .answer-text em { color: var(--accent); font-style: normal; font-weight: 500; }
+
+    /* ── Footer ── */
+    footer {
+      max-width: 720px;
+      margin: 2.5rem auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: .8rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--border);
+    }
+    .stack { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .pill {
+      font-family: var(--mono);
+      font-size: .7rem;
+      color: var(--muted);
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: .22rem .75rem;
+      letter-spacing: .04em;
+    }
+    .author { font-size: .78rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">Lab 9 · Browser Programming</div>
+    <h1>Backend <span>&</span> API Test</h1>
+    <p>Node.js + Express server on localhost:3000 — click to fetch live data.</p>
+  </header>
+
+  <div class="grid">
+
+    <!-- /api/message -->
+    <div class="card fade" style="animation-delay:.1s">
+      <div class="card-header">
+        <span class="card-title">Message Endpoint</span>
+        <span class="endpoint">GET /api/message</span>
+      </div>
+      <button onclick="getMessage()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Fetch Message
+      </button>
+      <div class="loader" id="loader-msg"><div class="spinner"></div> Fetching from server…</div>
+      <div class="error-msg" id="err-msg">⚠ Could not reach the server. Is it running on port 3000?</div>
+      <div class="output-wrap"><div class="output" id="output"></div></div>
+    </div>
+
+    <!-- /api/student -->
+    <div class="card blue fade" style="animation-delay:.2s">
+      <div class="card-header">
+        <span class="card-title">Student Endpoint</span>
+        <span class="endpoint">GET /api/student</span>
+      </div>
+      <button onclick="getStudent()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        Fetch Student
+      </button>
+      <div class="loader" id="loader-stu"><div class="spinner" style="border-top-color:var(--accent2)"></div> Fetching from server…</div>
+      <div class="error-msg" id="err-stu">⚠ Could not reach the server. Is it running on port 3000?</div>
+      <div class="output-wrap"><div class="output" id="student-output"></div></div>
+    </div>
+
+    <!-- Task 4 -->
+    <div class="card answer-card fade" style="animation-delay:.3s">
+      <div class="card-header">
+        <span class="card-title">Task 4 — Why do we need a backend?</span>
+      </div>
+      <p class="answer-text">
+        JavaScript in the browser runs on the <em>client</em> — it has no access to databases,
+        files, or secret credentials. A backend runs on a <em>server</em>, where we can securely
+        store data, apply business logic, and expose it as an <em>API</em> to any frontend or
+        mobile app. It also means one single source of truth instead of duplicating logic across
+        every client.
+      </p>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="stack">
+      <span class="pill">Node.js</span>
+      <span class="pill">Express</span>
+      <span class="pill">CORS</span>
+      <span class="pill">fetch API</span>
+    </div>
+    <span class="author">Ahnaf · Lab 9</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
