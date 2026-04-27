@@ -26,4 +26,5 @@ build/
 
 # Python cache if used accidentally
 __pycache__/
-*.pyc
+*.pycpackage-lock.json
+package.json
