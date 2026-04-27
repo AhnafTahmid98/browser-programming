@@ -24,7 +24,4 @@ build/
 # Environment files
 .env
 
-# Python cache if used accidentally
-__pycache__/
-*.pycpackage-lock.json
-package.json
+
