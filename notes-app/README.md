@@ -1,8 +1,6 @@
 # Notes App — Full-Stack Assignment
 
 **Course:** Browser Programming  
-**Student:** Ahnaf  
-**Date:** April 2026
 
 ---
 
