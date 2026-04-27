@@ -1,6 +1,6 @@
+// Notes App - Browser Programming Assignment
 // ── Config ────────────────────────────────────────────────
-// Change this to your Render backend URL after deployment
-const API_URL = "http://localhost:3000";
+const API_URL = "https://notes-app-backend-7ff1.onrender.com";
 
 // ── DOM refs ──────────────────────────────────────────────
 const noteInput  = document.getElementById("note-input");
