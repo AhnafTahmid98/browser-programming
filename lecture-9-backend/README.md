@@ -1,8 +1,6 @@
 # Lab 9 — My First Backend & API
 
 **Course:** Browser Programming  
-**Student:** Ahnaf  
-**Date:** April 2026
 
 ---
 
@@ -22,7 +20,7 @@ When you click the buttons on the page, the browser sends a request to the local
 
 ## 🗂️ Project Structure
 
-```
+```text
 lecture-9-backend/
 ├── server.js           ← Express backend with API routes
 ├── index.html          ← Frontend UI
@@ -68,7 +66,7 @@ Open `index.html` in your browser (double-click or drag into browser), then clic
 
 Basic health check — confirms the server is alive.
 
-```
+```text
 Server is running!
 ```
 
@@ -114,6 +112,7 @@ Returns student info.
 
 | # | Task | Status |
 |---|------|--------|
+
 | 1 | Changed message to `"My first API works!"` | ✅ Done |
 | 2 | Added `course`, `year`, `time` fields and displayed them in UI | ✅ Done |
 | 3 | Created `/api/student` endpoint and called it from frontend | ✅ Done |
@@ -138,6 +137,7 @@ Without a backend, every user could see and manipulate the logic directly. A bac
 
 | Package | Version | Purpose |
 |---------|---------|---------|
+
 | [express](https://expressjs.com/) | ^4.x | Web framework for Node.js |
 | [cors](https://www.npmjs.com/package/cors) | ^2.x | Allows frontend to call the API from a different origin |
 
@@ -147,6 +147,7 @@ Without a backend, every user could see and manipulate the logic directly. A bac
 
 | Problem | Solution |
 |---------|----------|
+
 | `Cannot GET /` | Server is not running — run `node server.js` |
 | Buttons do nothing | Open DevTools (`F12`) → Console tab and check for errors |
 | CORS error in console | Make sure `app.use(cors())` is in `server.js` |
