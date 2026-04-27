@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Notes App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       #f5f0e8;
+      --surface:  #fff;
+      --border:   #e2d9c8;
+      --accent:   #c9622f;
+      --accent-h: #a84e24;
+      --text:     #1a1612;
+      --muted:    #8a7e72;
+      --danger:   #c0392b;
+      --shadow:   0 2px 12px rgba(0,0,0,.07);
+      --sans:     "Instrument Sans", sans-serif;
+      --serif:    "Instrument Serif", serif;
+      --mono:     "DM Mono", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      padding: 3rem 1.5rem 6rem;
+    }
+
+    /* subtle paper texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyndef slideIn {
+      from { opacity: 0; transform: translateX(-10px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes noteIn {
+      from { opacity: 0; transform: translateY(10px) scale(.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    header { margin-bottom: 2.8rem; animation: fadeUp .5s ease both; }
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: .6rem;
+    }
+    header h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 6vw, 3.4rem);
+      font-weight: 400;
+      line-height: 1.05;
+      color: var(--text);
+    }
+    header h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    header p {
+      margin-top: .6rem;
+      font-size: .88rem;
+      color: var(--muted);
+    }
+
+    /* ── Input card ── */
+    .input-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      animation: fadeUp .5s .1s ease both;
+    }
+    .input-card label {
+      display: block;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .6rem;
+    }
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .85rem 1rem;
+      font-family: var(--sans);
+      font-size: .95rem;
+      color: var(--text);
+      resize: vertical;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+      line-height: 1.6;
+    }
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(201,98,47,.1);
+    }
+    textarea::placeholder { color: var(--muted); }
+
+    .input-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: .9rem;
+      gap: .8rem;
+      flex-wrap: wrap;
+    }
+    .char-count {
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--muted);
+    }
+
+    button.add-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: .65rem 1.5rem;
+      font-family: var(--sans);
+      font-size: .88rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background .2s, transform .1s, box-shadow .2s;
+      letter-spacing: .01em;
+    }
+    button.add-btn:hover {
+      background: var(--accent-h);
+      box-shadow: 0 4px 16px rgba(201,98,47,.3);
+    }
+    button.add-btn:active { transform: scale(.97); }
+    button.add-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+    /* ── Notes section ── */
+    .notes-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      animation: fadeUp .5s .2s ease both;
+    }
+    .notes-header h2 {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      font-weight: 400;
+    }
+    .count-badge {
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--accent);
+      background: rgba(201,98,47,.1);
+      border: 1px solid rgba(201,98,47,.2);
+      border-radius: 99px;
+      padding: .2rem .7rem;
+    }
+
+    /* ── Note card ── */
+    #notes-list { display: flex; flex-direction: column; gap: .85rem; }
+
+    .note-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.1rem 1.3rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      box-shadow: var(--shadow);
+      animation: noteIn .3s ease both;
+      transition: box-shadow .2s, border-color .2s;
+    }
+    .note-card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,.1);
+      border-color: #d4c9b8;
+    }
+    .note-body { flex: 1; }
+    .note-content {
+      font-size: .95rem;
+      line-height: 1.65;
+      color: var(--text);
+      word-break: break-word;
+    }
+    .note-time {
+      font-family: var(--mono);
+      font-size: .68rem;
+      color: var(--muted);
+      margin-top: .4rem;
+    }
+
+    .delete-btn {
+      flex-shrink: 0;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--muted);
+      transition: background .2s, border-color .2s, color .2s;
+      padding: 0;
+    }
+    .delete-btn:hover {
+      background: #fdf0ee;
+      border-color: #e8b4ae;
+      color: var(--danger);
+    }
+
+    /* ── Empty state ── */
+    .empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      animation: fadeUp .4s ease both;
+    }
+    .empty-icon {
+      font-size: 2.5rem;
+      margin-bottom: .8rem;
+      opacity: .4;
+    }
+    .empty p {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: var(--text);
+      color: #fff;
+      font-size: .83rem;
+      font-family: var(--sans);
+      padding: .65rem 1.3rem;
+      border-radius: 99px;
+      opacity: 0;
+      transition: opacity .25s, transform .25s;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 100;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── Loading ── */
+    .loading {
+      text-align: center;
+      padding: 2rem;
+      font-family: var(--mono);
+      font-size: .8rem;
+      color: var(--muted);
+    }
+    @keyframes pulse { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
+    .loading span { animation: pulse 1.2s infinite; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <p class="eyebrow">Browser Programming · Full-Stack App</p>
+      <h1>My <em>Notes</em></h1>
+      <p>Write it down. It'll still be here when you come back.</p>
+    </header>
+
+    <!-- Input -->
+    <div class="input-card">
+      <label for="note-input">New note</label>
+      <textarea id="note-input" placeholder="What's on your mind?" maxlength="500"></textarea>
+      <div class="input-footer">
+        <span class="char-count"><span id="char-num">0</span> / 500</span>
+        <button class="add-btn" onclick="addNote()" id="add-btn">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Note
+        </button>
+      </div>
+    </div>
+
+    <!-- Notes list -->
+    <div class="notes-header">
+      <h2>All Notes</h2>
+      <span class="count-badge" id="count-badge">0 notes</span>
+    </div>
+
+    <div id="notes-list">
+      <div class="loading"><span>Loading notes…</span></div>
+    </div>
+
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
