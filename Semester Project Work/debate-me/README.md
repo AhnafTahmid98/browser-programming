@@ -60,19 +60,7 @@ What makes DebateMe unique compared to typical semester projects is the AI fallb
 
 ![Generate Debate](screenshots/02-generate-debate.png)
 
-### Community Votes
-
-![Vote Bars](screenshots/03-vote-bars.png)
-
-### AI Rebuttal
-
-![AI Rebuttal](screenshots/04-ai-rebuttal.png)
-
-### Comments Section
-
-![Comments](screenshots/05-comments.png)
-
-### Trending Topics
+### Community Votes, AI Rebuttal, Comments Section, Trending Topics
 
 ![Trending](screenshots/06-trending-topics.png)
 
