@@ -56,41 +56,41 @@ What makes DebateMe unique compared to typical semester projects is the AI fallb
 
 ![Home Page](screenshots/01-homepage.png)
 
-### Generate Debate
+### Generate Debate FOR vs AGAINST Cards
 
 ![Generate Debate](screenshots/02-generate-debate.png)
 
-### FOR vs AGAINST Cards
-
-![Debate Cards](screenshots/03-for-against-cards.png)
-
 ### Community Votes
 
-![Vote Bars](screenshots/04-vote-bars.png)
+![Vote Bars](screenshots/03-vote-bars.png)
 
 ### AI Rebuttal
 
-![AI Rebuttal](screenshots/05-ai-rebuttal.png)
+![AI Rebuttal](screenshots/04-ai-rebuttal.png)
 
 ### Comments Section
 
-![Comments](screenshots/08-comments.png)
+![Comments](screenshots/05-comments.png)
 
 ### Trending Topics
 
-![Trending](screenshots/09-trending-topics.png)
+![Trending](screenshots/06-trending-topics.png)
 
 ### Leaderboard
 
-![Leaderboard](screenshots/10-leaderboard.png)
+![Leaderboard](screenshots/07-leaderboard.png)
 
 ### Light Mode
 
-![Light Mode](screenshots/11-light-mode.png)
+![Light Mode](screenshots/08-light-mode.png)
 
 ### Language & Mode Selector
 
-![Language Mode](screenshots/12-language-mode-selector.png)
+![Language Mode](screenshots/09-language-mode-selector.png)
+
+### Stats Bar
+
+![Language Mode](screenshots/10-stats-bar.png)
 
 ---
 
