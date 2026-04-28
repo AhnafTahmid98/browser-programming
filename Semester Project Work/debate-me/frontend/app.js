@@ -21,7 +21,7 @@
  */
 
 // ===== CONFIGURATION =====
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = 'https://debate-me-backend.onrender.com/api';
 
 // ===== STATE =====
 let currentDebate = null;
