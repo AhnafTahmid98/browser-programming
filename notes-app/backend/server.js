@@ -1,3 +1,4 @@
+// Notes App - Browser Programming Assignment
 const express = require("express");
 const cors = require("cors");
 const { Pool } = require("pg");
@@ -6,17 +7,16 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// ── Middleware ─────────────────────────────────────────────
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 
-// Database connection
+// ── Database connection ────────────────────────────────────
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
 });
 
-// Test DB connection on startup
 pool.connect((err) => {
   if (err) {
     console.error("Database connection failed:", err.message);
@@ -25,7 +25,12 @@ pool.connect((err) => {
   }
 });
 
-// ── Routes ────────────────────────────────────────────────
+// ── Routes ─────────────────────────────────────────────────
+
+// Root route
+app.get("/", (req, res) => {
+  res.json({ message: "Notes API is running!", status: "ok" });
+});
 
 // GET /notes — return all notes, newest first
 app.get("/notes", async (req, res) => {
@@ -81,7 +86,7 @@ app.delete("/notes/:id", async (req, res) => {
   }
 });
 
-// Start server
+// ── Start server ───────────────────────────────────────────
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
