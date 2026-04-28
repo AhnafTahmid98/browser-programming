@@ -86,7 +86,7 @@ What makes DebateMe unique compared to typical semester projects is the AI fallb
 
 ### Language & Mode Selector
 
-![Language Mode](screenshots/09-language-mode-selector.png)
+![Language Mode](screenshots/09-language-mode.png)
 
 ### Stats Bar
 
