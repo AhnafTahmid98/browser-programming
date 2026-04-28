@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Debate Me — AI Argues Both Sides</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+      <div class="container header-inner">
+        <div class="logo">
+          <div class="logo-icon">⚔️</div>
+          <span class="logo-text">Debate<span class="logo-accent">Me</span></span>
+        </div>
+        <p class="tagline">AI argues both sides — you decide who wins</p>
+        <button id="themeToggle" class="theme-toggle" title="Toggle theme">🌙 Dark</button>
+      </div>
+    </header>
+
+    <!-- ===== STATS BAR ===== -->
+    <div class="stats-bar">
+      <div class="container stats-inner">
+        <span id="statDebates">💬 0 Debates</span>
+        <span id="statVotes">👍 0 Votes</span>
+        <span id="statComments">🗨️ 0 Comments</span>
+        <span id="statMostVoted">🏆 —</span>
+      </div>
+    </div>
+
+    <!-- ===== MAIN ===== -->
+    <main class="container">
+
+      <!-- Topic Input Section -->
+      <section class="input-section">
+        <h1 class="input-title">What should we debate?</h1>
+        <p class="input-subtitle">
+          Type or speak your topic — choose language and style
+        </p>
+
+        <!-- Language and Mode Selectors -->
+        <div class="selectors-row">
+          <select id="languageSelect" class="selector">
+            <option value="English">🌍 English</option>
+            <option value="Spanish">🇪🇸 Spanish</option>
+            <option value="French">🇫🇷 French</option>
+            <option value="German">🇩🇪 German</option>
+            <option value="Finnish">🇫🇮 Finnish</option>
+            <option value="Arabic">🇸🇦 Arabic</option>
+            <option value="Chinese">🇨🇳 Chinese</option>
+            <option value="Hindi">🇮🇳 Hindi</option>
+          </select>
+          <select id="modeSelect" class="selector">
+            <option value="Formal">🎩 Formal</option>
+            <option value="Casual">😊 Casual</option>
+            <option value="Funny">😂 Funny</option>
+            <option value="ELI5">👶 ELI5</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <input
+            type="text"
+            id="topicInput"
+            class="topic-input"
+            placeholder="e.g. Social media does more harm than good"
+            maxlength="200"
+          />
+          <button id="voiceBtn" class="voice-btn" title="Speak your topic">🎤</button>
+          <button id="generateBtn" class="generate-btn">
+            <span class="btn-text">Generate Debate</span>
+            <span class="btn-loader hidden">Thinking...</span>
+          </button>
+        </div>
+
+        <p id="voiceStatus" class="voice-status hidden">🎤 Listening... speak now</p>
+        <p id="errorMessage" class="error-message hidden"></p>
+      </section>
+
+      <!-- Debate Result Section -->
+      <section id="debateSection" class="debate-section hidden">
+
+        <!-- Topic Badge -->
+        <div class="debate-topic-badge">
+          <span id="debateTopic"></span>
+          <span id="debateModeBadge" class="mode-badge"></span>
+          <span id="debateLangBadge" class="lang-badge"></span>
+        </div>
+
+        <!-- Timer -->
+        <div class="timer-container">
+          <div id="timerDisplay" class="timer-display">⏱️ <span id="timerCount">30</span>s to decide</div>
+          <button id="timerBtn" class="timer-btn">Start Timer</button>
+        </div>
+
+        <!-- Listen Controls -->
+        <div class="listen-controls">
+          <button id="listenBtn" class="listen-btn">🔊 Listen to Debate</button>
+          <button id="stopBtn" class="stop-btn hidden">⏹ Stop</button>
+        </div>
+
+        <!-- Arguments Grid -->
+        <div class="arguments-grid">
+
+          <!-- FOR Side -->
+          <div class="argument-card for-card">
+            <div class="card-header for-header">
+              <span class="side-icon">✅</span>
+              <h2 class="side-title">For</h2>
+              <span class="side-label">Supporting</span>
+            </div>
+            <p id="forArgument" class="argument-text"></p>
+            <div class="card-actions">
+              <button class="copy-btn" id="copyForBtn">📋 Copy</button>
+              <button class="vote-btn for-vote-btn" id="forVoteBtn">👍 This won</button>
+            </div>
+          </div>
+
+          <!-- VS Divider -->
+          <div class="vs-divider">
+            <span class="vs-text">VS</span>
+          </div>
+
+          <!-- AGAINST Side -->
+          <div class="argument-card against-card">
+            <div class="card-header against-header">
+              <span class="side-icon">❌</span>
+              <h2 class="side-title">Against</h2>
+              <span class="side-label">Opposing</span>
+            </div>
+            <p id="againstArgument" class="argument-text"></p>
+            <div class="card-actions">
+              <button class="copy-btn" id="copyAgainstBtn">📋 Copy</button>
+              <button class="vote-btn against-vote-btn" id="againstVoteBtn">👍 This won</button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Vote Result Bars -->
+        <div id="voteResult" class="vote-result hidden">
+          <h3 class="vote-result-title">📊 Community Votes</h3>
+          <div class="vote-bars">
+            <div class="vote-bar-container">
+              <span class="vote-bar-label">For</span>
+              <div class="vote-bar-track">
+                <div id="forBar" class="vote-bar for-bar"></div>
+              </div>
+              <span id="forVoteCount" class="vote-count">0</span>
+            </div>
+            <div class="vote-bar-container">
+              <span class="vote-bar-label">Against</span>
+              <div class="vote-bar-track">
+                <div id="againstBar" class="vote-bar against-bar"></div>
+              </div>
+              <span id="againstVoteCount" class="vote-count">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Rebuttal Section -->
+        <div id="rebuttalSection" class="rebuttal-section hidden">
+          <h3 class="rebuttal-title">🤖 AI Rebuttal</h3>
+          <p class="rebuttal-subtitle">The losing side fights back...</p>
+          <div id="rebuttalText" class="rebuttal-text"></div>
+        </div>
+
+        <!-- Share Button -->
+        <div class="share-row">
+          <button id="shareBtn" class="share-btn">🔗 Share this Debate</button>
+          <p id="shareFeedback" class="share-feedback hidden">✅ Link copied to clipboard!</p>
+        </div>
+
+        <!-- AI Provider Badge -->
+        <p id="providerBadge" class="provider-badge"></p>
+
+        <!-- Comments Section -->
+        <div class="comments-section">
+          <h3 class="comments-title">💬 Discussion</h3>
+          <div class="comment-form">
+            <input
+              type="text"
+              id="usernameInput"
+              class="comment-input"
+              placeholder="Your name (optional)"
+              maxlength="50"
+            />
+            <textarea
+              id="commentInput"
+              class="comment-textarea"
+              placeholder="Share your thoughts on this debate..."
+              maxlength="500"
+              rows="3"
+            ></textarea>
+            <button id="submitCommentBtn" class="submit-comment-btn">Post Comment</button>
+          </div>
+          <div id="commentsList" class="comments-list">
+            <p class="loading-text">Loading comments...</p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Trending Section -->
+      <section class="trending-section">
+        <h2 class="section-title">🔥 Trending Topics</h2>
+        <div id="trendingList" class="trending-list">
+          <p class="loading-text">Loading trending...</p>
+        </div>
+      </section>
+
+      <!-- Leaderboard Section -->
+      <section class="leaderboard-section">
+        <div class="leaderboard-header">
+          <h2 class="leaderboard-title">🏆 Recent Debates</h2>
+          <button id="refreshBtn" class="refresh-btn">Refresh</button>
+        </div>
+        <div id="leaderboardList" class="leaderboard-list">
+          <p class="loading-text">Loading debates...</p>
+        </div>
+      </section>
+
+      <!-- Badges Section -->
+      <section id="badgesSection" class="badges-section hidden">
+        <h2 class="section-title">🏅 Your Badges</h2>
+        <div id="badgesList" class="badges-list"></div>
+      </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <div class="container">
+        <p>Built with ⚔️ by Ahnaf Tahmid · Powered by Groq + Gemini + Supabase</p>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
