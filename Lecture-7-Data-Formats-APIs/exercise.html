@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lecture 7 – REST API Fetch</title>
+  <link rel="stylesheet" href="exercise.css">
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-logo">Lecture 7</span>
+      <div class="topbar-divider"></div>
+      <span class="topbar-breadcrumb">Data Formats &amp; APIs</span>
+    </div>
+    <div class="topbar-badge">
+      <span class="live-dot"></span>
+      JSONPlaceholder API
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div>
+      <h1 class="sidebar-title">User<br><span>Directory</span></h1>
+    </div>
+    <p class="sidebar-desc">
+      Fetches live user data from a public REST API using the browser's
+      native <code>fetch()</code> with async/await.
+    </p>
+
+    <!-- Live stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Users</div>
+        <div class="stat-value blue" id="statCount">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Status</div>
+        <div class="stat-value green" id="statStatus">—</div>
+      </div>
+    </div>
+
+    <!-- Button -->
+    <button id="btnLoadUsers">
+      ↓ &nbsp;Load Users
+    </button>
+
+    <!-- Status pill -->
+    <p id="status"></p>
+
+    <!-- API info -->
+    <div class="api-info">
+      <div class="api-label">Endpoint</div>
+      <div class="api-url">jsonplaceholder.typicode.com/users</div>
+    </div>
+  </aside>
+
+  <!-- Main panel -->
+  <main class="main">
+
+    <div class="toolbar">
+      <div class="toolbar-title">All Users</div>
+      <span class="result-count" id="resultCount">No data loaded</span>
+    </div>
+
+    <!-- Part E — user cards -->
+    <ul id="userList"></ul>
+
+    <!-- Console log -->
+    <div class="console-wrap">
+      <div class="console-header">
+        <div class="console-dot" style="background:#ef4444"></div>
+        <div class="console-dot" style="background:#f59e0b"></div>
+        <div class="console-dot" style="background:#22c55e"></div>
+        <span class="console-title">Console Output</span>
+      </div>
+      <pre id="output"></pre>
+    </div>
+
+  </main>
+
+  <script src="exercise.js"></script>
+</body>
+</html>
